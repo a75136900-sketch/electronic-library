@@ -1,4 +1,5 @@
 
+
 const bookElement = document.getElementById("book");
 
 // Кітаптың 3D қозғалтқышы
