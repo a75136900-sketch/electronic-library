@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электрондық кітапхана</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>📚 Электрондық кітапхана</h1>
+    <p>Кітаптар әлеміне қош келдіңіз!</p>
+</header>
+
+<section class="reader-section">
+    <h2>📖 Электрондық кітапты оқу</h2>
+    <p>Кітапты ашу үшін мұқабасын басыңыз</p>
+
+    <div class="book-stage">
+        <div class="flipbook">
+
+            <div class="cover" id="cover" onclick="openBook()">
+                <div class="cover-content">
+                    <span>📚</span>
+                    <h2>ЭЛЕКТРОНДЫҚ КІТАПХАНА</h2>
+                    <p>Кітаптар деректер қоры</p>
+                    <small>Кітапты ашу үшін басыңыз</small>
+                </div>
+            </div>
+
+            <div class="paper" id="paper1">
+                <div class="front">
+                    <h3>1-бет</h3>
+                    <h2>КІТАПХАНА</h2>
+                    <p>Кітап — білім бұлағы.</p>
+                    <p>Электрондық кітапханаға қош келдіңіз!</p>
+                </div>
+                <div class="back">
+                    <h3>2-бет</h3>
+                    <h2>Кітапхана</h2>
+                    <p>Кітапхана — кітаптарды жинақтау және сақтау орталығы.</p>
+                </div>
+            </div>
+
+            <div class="paper" id="paper2">
+                <div class="front">
+                    <h3>3-бет</h3>
+                    <h2>Деректер қоры</h2>
+                    <p>Кітаптардың атауы, авторы, жылы және санаты сақталады.</p>
+                </div>
+                <div class="back">
+                    <h3>4-бет</h3>
+                    <h2>Жүйенің мақсаты</h2>
+                    <p>Кітаптарды электронды түрде басқару.</p>
+                </div>
+            </div>
+
+            <div class="paper" id="paper3">
+                <div class="front">
+                    <h3>5-бет</h3>
+                    <h2>Технологиялар</h2>
+                    <p>HTML, CSS, JavaScript, Python және SQLite.</p>
+                </div>
+                <div class="back">
+                    <h3>6-бет</h3>
+                    <h2>Қорытынды</h2>
+                    <p>Электрондық кітапхана кітап қорын тиімді басқаруға мүмкіндік береді.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="book-controls">
+        <button onclick="previousPage()">❮ Алдыңғы бет</button>
+        <span id="pageNumber">Мұқаба</span>
+        <button onclick="nextPage()">Келесі бет ❯</button>
+    </div>
+
+    <button class="close-book" onclick="closeBook()">✖ Кітапты жабу</button>
+</section>
+
+<footer>
+    © 2026 Электрондық кітапхана
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
