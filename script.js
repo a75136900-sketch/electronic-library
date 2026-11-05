@@ -1,70 +1,77 @@
 
-
 const bookElement = document.getElementById("book");
 
-// Кітаптың 3D қозғалтқышы
-const pageFlip = new St.PageFlip(bookElement, {
+if (typeof St === "undefined") {
+    document.getElementById("pageInfo").textContent =
+        "Кітапхананы жүктеу қатесі. Интернетті тексеріңіз.";
+} else {
+    const pageFlip = new St.PageFlip(bookElement, {
+        width: 450,
+        height: 600,
 
-    // Бір парақтың өлшемі
-    width: 450,
-    height: 600,
+        size: "stretch",
 
-    // Кітап өлшемі
-    size: "stretch",
+        minWidth: 280,
+        maxWidth: 450,
 
-    minWidth: 280,
-    maxWidth: 1000,
+        minHeight: 350,
+        maxHeight: 600,
 
-    minHeight: 350,
-    maxHeight: 1400,
+        showCover: true,
+        flippingTime: 1200,
 
-    // Мұқабаны жеке көрсету
-    showCover: true,
+        drawShadow: true,
+        maxShadowOpacity: 0.7,
 
-    // Парақтың қозғалыс уақыты
-    flippingTime: 1400,
+        // Екі бетті қатар көрсету
+        usePortrait: false,
 
-    // Көлеңкелер
-    drawShadow: true,
-    maxShadowOpacity: 0.75,
+        autoSize: true,
+        mobileScrollSupport: false,
 
-    // Телефонға бейімдеу
-    usePortrait: true,
-    autoSize: true,
-    mobileScrollSupport: false,
+        disableFlipByClick: false,
+        startPage: 0,
+        startZIndex: 10,
+        showPageCorners: true,
+        swipeDistance: 30
+    });
 
-    // Беттерді басу арқылы аудару
-    disableFlipByClick: false,
+    const pages = document.querySelectorAll(".page");
 
-    // Бастапқы бет
-    startPage: 0,
+    pageFlip.loadFromHTML(pages);
 
-    // Қабаттардың реті
-    startZIndex: 10,
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const pageInfo = document.getElementById("pageInfo");
 
-    // Беттің бұрышын бүгу
-    showPageCorners: true,
+    function updateControls() {
+        const currentPage = pageFlip.getCurrentPageIndex();
+        const totalPages = pageFlip.getPageCount();
 
-    // Қолмен сүйреу
-    swipeDistance: 30
-});
+        prevBtn.disabled = currentPage <= 0;
+        nextBtn.disabled = currentPage >= totalPages - 1;
 
-// HTML ішіндегі беттерді жүктеу
-pageFlip.loadFromHTML(
-    document.querySelectorAll(".page")
-);
+        if (currentPage === 0) {
+            pageInfo.textContent = "Алдыңғы мұқаба";
+        } else if (currentPage === totalPages - 1) {
+            pageInfo.textContent = "Артқы мұқаба";
+        } else {
+            pageInfo.textContent =
+                "Беттер " + currentPage + "–" + (currentPage + 1);
+        }
+    }
 
-// Бет ауысқанда
-pageFlip.on("flip", (event) => {
-    console.log("Қазіргі бет:", event.data + 1);
-});
+    nextBtn.addEventListener("click", () => {
+        pageFlip.flipNext();
+    });
 
-// Кітаптың бағыты өзгергенде
-pageFlip.on("changeOrientation", (event) => {
-    console.log("Кітап бағыты:", event.data);
-});
+    prevBtn.addEventListener("click", () => {
+        pageFlip.flipPrev();
+    });
 
-// Анимация күйі өзгергенде
-pageFlip.on("changeState", (event) => {
-    console.log("Анимация күйі:", event.data);
-});
+    pageFlip.on("flip", () => {
+        updateControls();
+    });
+
+    updateControls();
+}
