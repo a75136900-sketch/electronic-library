@@ -1,446 +1,232 @@
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
-    background: radial-gradient(ellipse at center, #82725d, #171512);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    padding: 25px 12px;
+    background: radial-gradient(circle, #52616b, #17232b);
     font-family: Georgia, "Times New Roman", serif;
-}
-
-.scene {
-    width: 100%;
-    height: 100vh;
+    color: #fff;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    perspective: 2500px;
-    padding: 15px;
 }
 
-.book {
-    position: relative;
+.main-title {
+    text-align: center;
+    font-size: 28px;
+    margin: 5px 0 25px;
+    letter-spacing: 1px;
+}
+
+.book-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#book {
     width: min(900px, 96vw);
-    height: min(580px, 82vh);
-    transform-style: preserve-3d;
-    filter: drop-shadow(0 25px 25px #0009);
+    height: min(600px, 68vw);
+    min-height: 380px;
+    margin: 0 auto;
 }
 
-.left-base,
-.right-base {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: #f7eedc;
-    background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 3px, #e0d2b8 4px
-    );
-    box-shadow: inset 0 0 18px #78674b22;
-}
-
-.left-base {
-    left: 0;
-    border-radius: 5px 0 0 5px;
-}
-
-.right-base {
-    left: 50%;
-    border-radius: 0 5px 5px 0;
-}
-
-.sheet {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    transform-origin: left center;
-    transform-style: preserve-3d;
-    transition: transform 1.5s cubic-bezier(.2,.7,.15,1);
-    cursor: pointer;
-    will-change: transform;
-}
-
+/* Барлық парақтар */
 .page {
-    position: absolute;
-    inset: 0;
-    padding: 55px 38px;
-    background-color: #f8f0df;
-    background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 3px, #e7ddc9 4px
-    );
-    backface-visibility: hidden;
+    background: #f5edda;
+    color: #33291e;
     overflow: hidden;
-    color: #40382d;
-    line-height: 1.85;
+    border: 1px solid #d8c9a9;
+}
+
+.page-content {
+    width: 100%;
+    height: 100%;
+    padding: 55px 42px;
+    position: relative;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(120, 90, 50, 0.025) 0px,
+            rgba(120, 90, 50, 0.025) 1px,
+            transparent 1px,
+            transparent 5px
+        ),
+        #f5edda;
+}
+
+.page-content h2 {
+    text-align: center;
+    font-size: 27px;
+    margin: 20px 0 35px;
+    color: #563c24;
+}
+
+.page-content p {
+    font-size: 19px;
+    line-height: 1.8;
     text-align: justify;
-    font-size: 16px;
-    transform-style: preserve-3d;
-}
-
-.page::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #00000008 30%,
-        #00000045 48%,
-        #ffffff55 52%,
-        #00000018 75%,
-        transparent
-    );
-    transition: opacity .5s ease;
-}
-
-.sheet.turning .page::after,
-.sheet.turning-back .page::after {
-    opacity: 1;
-}
-
-.front {
-    border-left: 1px solid #c8b99b;
-    box-shadow: inset 8px 0 15px #0000000c;
-}
-
-.back {
-    transform: rotateY(180deg);
-    border-right: 1px solid #c8b99b;
-    box-shadow: inset -8px 0 15px #0000000c;
-}
-
-.page h1 {
-    text-align: center;
-    font-size: 30px;
-    margin-top: 60px;
-    margin-bottom: 20px;
-    color: #62472c;
-}
-
-.page h2 {
-    font-size: 23px;
-    color: #67482b;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.page h3 {
-    font-size: 18px;
-    text-align: center;
-    color: #98774c;
-    margin-bottom: 25px;
-}
-
-.page p {
-    margin-bottom: 16px;
-    text-indent: 22px;
-}
-
-.page ul {
-    padding-left: 22px;
-    margin: 15px 0;
-}
-
-.page li {
-    margin-bottom: 9px;
 }
 
 .page-number {
     position: absolute;
     bottom: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    color: #9b896d;
-}
-
-.line {
-    width: 65px;
-    height: 2px;
-    background: #a8895d;
-    margin: 0 auto 30px;
-}
-
-/* Беттердің қабаттасуы */
-
-.sheet:nth-of-type(4) { z-index: 16; }
-.sheet:nth-of-type(5) { z-index: 15; }
-.sheet:nth-of-type(6) { z-index: 14; }
-.sheet:nth-of-type(7) { z-index: 13; }
-.sheet:nth-of-type(8) { z-index: 12; }
-.sheet:nth-of-type(9) { z-index: 11; }
-
-.sheet.flipped {
-    transform: rotateY(-180deg);
-}
-
-/* Алға қарай иілу */
-
-.sheet.turning {
-    animation: pageCurl 1.5s cubic-bezier(.2,.7,.15,1);
-}
-
-@keyframes pageCurl {
-    0% {
-        transform: rotateY(0deg) skewY(0deg);
-    }
-    15% {
-        transform: rotateY(-22deg) skewY(-2deg);
-    }
-    35% {
-        transform: rotateY(-65deg) skewY(4deg);
-    }
-    50% {
-        transform: rotateY(-95deg) skewY(-5deg);
-    }
-    68% {
-        transform: rotateY(-135deg) skewY(3deg);
-    }
-    85% {
-        transform: rotateY(-165deg) skewY(-1deg);
-    }
-    100% {
-        transform: rotateY(-180deg) skewY(0deg);
-    }
-}
-
-/* Артқа қарай иілу */
-
-.sheet.turning-back {
-    animation: pageCurlBack 1.5s cubic-bezier(.2,.7,.15,1);
-}
-
-@keyframes pageCurlBack {
-    0% {
-        transform: rotateY(-180deg) skewY(0deg);
-    }
-    15% {
-        transform: rotateY(-158deg) skewY(2deg);
-    }
-    35% {
-        transform: rotateY(-115deg) skewY(-4deg);
-    }
-    50% {
-        transform: rotateY(-85deg) skewY(5deg);
-    }
-    68% {
-        transform: rotateY(-45deg) skewY(-3deg);
-    }
-    85% {
-        transform: rotateY(-15deg) skewY(1deg);
-    }
-    100% {
-        transform: rotateY(0deg) skewY(0deg);
-    }
+    right: 30px;
+    font-size: 14px;
+    color: #8b795e;
 }
 
 /* Алдыңғы мұқаба */
+.cover-page {
+    background: linear-gradient(135deg, #59351e, #2c1b12);
+    color: #f7e5b8;
+}
 
-.cover {
-    position: absolute;
-    top: 0;
-    left: 25%;
-    width: 50%;
+.cover-design,
+.back-cover-design {
     height: 100%;
-    z-index: 50;
-    transform-origin: left center;
-    transform-style: preserve-3d;
-    transition: transform 1.8s cubic-bezier(.2,.7,.15,1),
-                left 1.8s cubic-bezier(.2,.7,.15,1);
-    cursor: pointer;
-    background: linear-gradient(
-        110deg, #372318, #70472a 35%, #3c271a 70%, #24170f
-    );
-    border: 5px solid #9a7144;
-    box-shadow: inset 8px 0 15px #ffffff18,
-                inset -8px 0 15px #0007;
-    backface-visibility: hidden;
-}
-
-.cover.open {
-    left: 50%;
-    transform: rotateY(-180deg);
-    pointer-events: none;
-}
-
-.cover-design {
-    position: absolute;
-    inset: 12px;
-    border: 2px solid #c4a36d;
-    background: radial-gradient(ellipse, #79502f, #40291a);
-}
-
-.cover-border {
-    position: absolute;
-    inset: 15px;
-    border: 1px solid #d0ad77;
+    width: 100%;
+    padding: 45px 30px;
+    border: 8px double #c6a56a;
+    outline: 2px solid #c6a56a;
+    outline-offset: -17px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #e8d2a7;
-    padding: 15px;
+    background:
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.07), transparent 70%);
 }
 
-.cover-symbol {
-    font-size: 65px;
-    color: #d8b77e;
-    margin-bottom: 30px;
+.cover-design h1 {
+    font-size: 38px;
+    line-height: 1.4;
+    letter-spacing: 3px;
+    margin: 20px 0;
 }
 
-.cover-border h1 {
-    font-size: clamp(20px, 3vw, 32px);
-    letter-spacing: 5px;
-    margin-bottom: 22px;
-    text-shadow: 2px 3px 5px #000;
+.cover-design p {
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.cover-decoration {
+    font-size: 48px;
+    color: #d9b878;
 }
 
 .cover-line {
     width: 65%;
-    height: 1px;
-    background: #c8a36c;
-    margin-bottom: 25px;
+    height: 2px;
+    background: #d9b878;
+    margin: 25px 0;
 }
 
-.cover-border h2 {
-    font-size: clamp(14px, 2vw, 20px);
+.cover-design span,
+.back-cover-design span {
+    font-size: 17px;
     letter-spacing: 3px;
-    line-height: 1.8;
-    font-weight: normal;
-}
-
-.bottom-symbol {
-    margin: 30px 0 0;
-    transform: rotate(180deg);
-}
-
-.cover-hint {
-    position: absolute;
-    bottom: 15px;
-    font-size: 11px;
-    color: #c9ae82;
-}
-
-.cover:hover {
-    filter: brightness(1.15);
 }
 
 /* Артқы мұқаба */
-
 .back-cover {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 0;
-    background: linear-gradient(110deg, #24170f, #70472a, #372318);
-    border: 5px solid #9a7144;
-    padding: 12px;
-    box-shadow: inset 0 0 20px #0007;
+    background: linear-gradient(135deg, #382315, #674329);
+    color: #f7e5b8;
 }
 
-.back-cover-inner {
-    height: 100%;
-    border: 2px solid #c4a36d;
+.back-cover-design h2 {
+    font-size: 32px;
+    line-height: 1.5;
+    letter-spacing: 3px;
+}
+
+.back-cover-design p {
+    font-size: 17px;
+}
+
+/* Басқару батырмалары */
+.controls {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    color: #e8d2a7;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.controls button {
+    padding: 12px 25px;
+    border: 1px solid #d9b878;
+    border-radius: 7px;
+    background: #382719;
+    color: #f7e5b8;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.controls button:hover:not(:disabled) {
+    background: #79502e;
+    transform: translateY(-2px);
+}
+
+.controls button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    min-width: 100px;
     text-align: center;
-    gap: 25px;
+    font-size: 15px;
+    color: #fff;
 }
 
-.back-cover h2 {
-    letter-spacing: 5px;
-    font-size: 28px;
-}
-
-.back-cover p {
-    font-style: italic;
-}
-
-.ornament {
-    color: #d8b77e;
-    font-size: 40px;
-}
-
-.gold-line {
-    width: 55%;
-    height: 1px;
-    background: #c8a36c;
-}
-
-/* Жабық кітап */
-
-.book:not(.opened) .left-base,
-.book:not(.opened) .right-base,
-.book:not(.opened) .sheet,
-.book:not(.opened) .back-cover {
-    visibility: hidden;
-}
-
-/* Телефон */
-
-@media (max-width: 650px) {
-    .book {
-        height: min(460px, 75vh);
+/* Телефонға бейімдеу */
+@media (max-width: 600px) {
+    body {
+        padding: 15px 5px;
     }
 
-    .page {
-        padding: 30px 13px;
-        font-size: 12px;
-        line-height: 1.65;
+    .main-title {
+        font-size: 21px;
+        margin-bottom: 18px;
     }
 
-    .page h1 {
-        font-size: 19px;
-        margin-top: 30px;
+    #book {
+        width: 96vw;
+        height: 65vh;
+        min-height: 350px;
     }
 
-    .page h2 {
-        font-size: 16px;
-        margin-bottom: 15px;
+    .page-content {
+        padding: 35px 20px;
     }
 
-    .page h3 {
+    .page-content h2 {
+        font-size: 21px;
+    }
+
+    .page-content p {
+        font-size: 15px;
+    }
+
+    .cover-design h1 {
+        font-size: 27px;
+    }
+
+    .controls {
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .controls button {
+        padding: 10px 14px;
         font-size: 14px;
-    }
-
-    .page p {
-        margin-bottom: 10px;
-        text-indent: 10px;
-    }
-
-    .cover-border h1 {
-        letter-spacing: 2px;
-    }
-
-    .cover-symbol {
-        font-size: 40px;
-    }
-
-    .back-cover h2 {
-        font-size: 18px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .sheet,
-    .cover {
-        transition-duration: .3s;
     }
 }
