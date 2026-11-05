@@ -12,7 +12,7 @@ let isAnimating = false;
 
 const animationDuration = 1500;
 
-// Беттердің қабаттасу ретін басқару
+// Қабаттарды реттеу
 function updateLayers() {
     sheets.forEach((sheet, index) => {
         if (index < currentPage) {
@@ -42,7 +42,6 @@ function openBook() {
 // Келесі бет
 function nextPage() {
     if (!isOpened || isAnimating) return;
-
     if (currentPage >= sheets.length) return;
 
     isAnimating = true;
@@ -65,7 +64,6 @@ function nextPage() {
 // Алдыңғы бет
 function previousPage() {
     if (!isOpened || isAnimating) return;
-
     if (currentPage <= 0) return;
 
     isAnimating = true;
@@ -75,20 +73,20 @@ function previousPage() {
     const sheet = sheets[currentPage];
 
     sheet.classList.remove("flipped");
-    sheet.classList.add("turning");
+    sheet.classList.add("turning-back");
 
     updateLayers();
 
     setTimeout(() => {
-        sheet.classList.remove("turning");
+        sheet.classList.remove("turning-back");
         isAnimating = false;
     }, animationDuration);
 }
 
-// Бетті басу арқылы басқару
+// Басу арқылы басқару
 book.addEventListener("click", function(event) {
 
-    // Алдыңғы мұқаба
+    // Мұқабаны ашу
     if (event.target.closest(".cover")) {
         openBook();
         return;
@@ -100,16 +98,15 @@ book.addEventListener("click", function(event) {
 
     if (!clickedSheet) return;
 
-    // Оң жақ бет — келесі бет
+    // Оң жақ бет
     if (!clickedSheet.classList.contains("flipped")) {
         nextPage();
     }
 
-    // Сол жақ бет — алдыңғы бет
+    // Сол жақ бет
     else {
         previousPage();
     }
 });
 
-// Бастапқы қабаттар
 updateLayers();
