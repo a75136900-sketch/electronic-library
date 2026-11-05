@@ -7,8 +7,7 @@
 
 body {
     min-height: 100vh;
-    background:
-        radial-gradient(ellipse at center, #82725d 0%, #44382c 55%, #171512 100%);
+    background: radial-gradient(ellipse at center, #82725d, #171512);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,8 +33,6 @@ body {
     filter: drop-shadow(0 25px 25px #0009);
 }
 
-/* Қағаз негізі */
-
 .left-base,
 .right-base {
     position: absolute;
@@ -43,13 +40,9 @@ body {
     width: 50%;
     height: 100%;
     background: #f7eedc;
-    background-image:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 3px,
-            #e0d2b8 4px
-        );
+    background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 3px, #e0d2b8 4px
+    );
     box-shadow: inset 0 0 18px #78674b22;
 }
 
@@ -63,8 +56,6 @@ body {
     border-radius: 0 5px 5px 0;
 }
 
-/* Беттер */
-
 .sheet {
     position: absolute;
     top: 0;
@@ -73,8 +64,7 @@ body {
     height: 100%;
     transform-origin: left center;
     transform-style: preserve-3d;
-    transition:
-        transform 1.5s cubic-bezier(.2,.7,.15,1);
+    transition: transform 1.5s cubic-bezier(.2,.7,.15,1);
     cursor: pointer;
     will-change: transform;
 }
@@ -82,17 +72,11 @@ body {
 .page {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     padding: 55px 38px;
     background-color: #f8f0df;
-    background-image:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 3px,
-            #e7ddc9 4px
-        );
+    background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 3px, #e7ddc9 4px
+    );
     backface-visibility: hidden;
     overflow: hidden;
     color: #40382d;
@@ -102,28 +86,26 @@ body {
     transform-style: preserve-3d;
 }
 
-/* Беттің табиғи көлеңкесі мен иілуі */
-
 .page::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
     opacity: 0;
-    background:
-        linear-gradient(
-            90deg,
-            transparent 0%,
-            #00000008 30%,
-            #00000030 48%,
-            #ffffff55 52%,
-            #00000018 75%,
-            transparent 100%
-        );
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00000008 30%,
+        #00000045 48%,
+        #ffffff55 52%,
+        #00000018 75%,
+        transparent
+    );
     transition: opacity .5s ease;
 }
 
-.sheet.turning .page::after {
+.sheet.turning .page::after,
+.sheet.turning-back .page::after {
     opacity: 1;
 }
 
@@ -203,7 +185,7 @@ body {
     transform: rotateY(-180deg);
 }
 
-/* Беттің ашылу кезіндегі динамикалық иілу */
+/* Алға қарай иілу */
 
 .sheet.turning {
     animation: pageCurl 1.5s cubic-bezier(.2,.7,.15,1);
@@ -213,33 +195,57 @@ body {
     0% {
         transform: rotateY(0deg) skewY(0deg);
     }
-
     15% {
         transform: rotateY(-22deg) skewY(-2deg);
     }
-
     35% {
         transform: rotateY(-65deg) skewY(4deg);
     }
-
     50% {
         transform: rotateY(-95deg) skewY(-5deg);
     }
-
     68% {
         transform: rotateY(-135deg) skewY(3deg);
     }
-
     85% {
         transform: rotateY(-165deg) skewY(-1deg);
     }
-
     100% {
         transform: rotateY(-180deg) skewY(0deg);
     }
 }
 
-/* Мұқабаның дизайны */
+/* Артқа қарай иілу */
+
+.sheet.turning-back {
+    animation: pageCurlBack 1.5s cubic-bezier(.2,.7,.15,1);
+}
+
+@keyframes pageCurlBack {
+    0% {
+        transform: rotateY(-180deg) skewY(0deg);
+    }
+    15% {
+        transform: rotateY(-158deg) skewY(2deg);
+    }
+    35% {
+        transform: rotateY(-115deg) skewY(-4deg);
+    }
+    50% {
+        transform: rotateY(-85deg) skewY(5deg);
+    }
+    68% {
+        transform: rotateY(-45deg) skewY(-3deg);
+    }
+    85% {
+        transform: rotateY(-15deg) skewY(1deg);
+    }
+    100% {
+        transform: rotateY(0deg) skewY(0deg);
+    }
+}
+
+/* Алдыңғы мұқаба */
 
 .cover {
     position: absolute;
@@ -250,23 +256,15 @@ body {
     z-index: 50;
     transform-origin: left center;
     transform-style: preserve-3d;
-    transition:
-        transform 1.8s cubic-bezier(.2,.7,.15,1),
-        left 1.8s cubic-bezier(.2,.7,.15,1);
+    transition: transform 1.8s cubic-bezier(.2,.7,.15,1),
+                left 1.8s cubic-bezier(.2,.7,.15,1);
     cursor: pointer;
-    background:
-        linear-gradient(
-            110deg,
-            #372318,
-            #70472a 35%,
-            #3c271a 70%,
-            #24170f
-        );
+    background: linear-gradient(
+        110deg, #372318, #70472a 35%, #3c271a 70%, #24170f
+    );
     border: 5px solid #9a7144;
-    box-shadow:
-        inset 8px 0 15px #ffffff18,
-        inset -8px 0 15px #0007,
-        8px 10px 20px #0005;
+    box-shadow: inset 8px 0 15px #ffffff18,
+                inset -8px 0 15px #0007;
     backface-visibility: hidden;
 }
 
@@ -280,8 +278,7 @@ body {
     position: absolute;
     inset: 12px;
     border: 2px solid #c4a36d;
-    background:
-        radial-gradient(ellipse, #79502f, #40291a);
+    background: radial-gradient(ellipse, #79502f, #40291a);
 }
 
 .cover-border {
@@ -333,8 +330,11 @@ body {
     position: absolute;
     bottom: 15px;
     font-size: 11px;
-    letter-spacing: 1px;
     color: #c9ae82;
+}
+
+.cover:hover {
+    filter: brightness(1.15);
 }
 
 /* Артқы мұқаба */
@@ -346,8 +346,7 @@ body {
     width: 50%;
     height: 100%;
     z-index: 0;
-    background:
-        linear-gradient(110deg, #24170f, #70472a, #372318);
+    background: linear-gradient(110deg, #24170f, #70472a, #372318);
     border: 5px solid #9a7144;
     padding: 12px;
     box-shadow: inset 0 0 20px #0007;
@@ -385,7 +384,7 @@ body {
     background: #c8a36c;
 }
 
-/* Кітап бастапқыда толығымен жабық */
+/* Жабық кітап */
 
 .book:not(.opened) .left-base,
 .book:not(.opened) .right-base,
@@ -394,13 +393,7 @@ body {
     visibility: hidden;
 }
 
-/* Мұқаба қозғалысы */
-
-.cover:hover {
-    filter: brightness(1.15);
-}
-
-/* Телефонға бейімдеу */
+/* Телефон */
 
 @media (max-width: 650px) {
     .book {
