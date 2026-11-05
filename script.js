@@ -1,77 +1,69 @@
 
 const bookElement = document.getElementById("book");
 
+// Кітаптың 3D қозғалтқышы
 const pageFlip = new St.PageFlip(bookElement, {
+
+    // Бір парақтың өлшемі
     width: 450,
     height: 600,
 
+    // Кітап өлшемі
     size: "stretch",
+
     minWidth: 280,
-    maxWidth: 900,
+    maxWidth: 1000,
+
     minHeight: 350,
-    maxHeight: 1200,
+    maxHeight: 1400,
 
-    drawShadow: true,
-    maxShadowOpacity: 0.8,
-
-    flippingTime: 1200,
-
-    usePortrait: true,
-    startPage: 0,
-    startZIndex: 10,
-
-    autoSize: true,
+    // Мұқабаны жеке көрсету
     showCover: true,
 
+    // Парақтың қозғалыс уақыты
+    flippingTime: 1400,
+
+    // Көлеңкелер
+    drawShadow: true,
+    maxShadowOpacity: 0.75,
+
+    // Телефонға бейімдеу
+    usePortrait: true,
+    autoSize: true,
     mobileScrollSupport: false,
+
+    // Беттерді басу арқылы аудару
     disableFlipByClick: false,
 
+    // Бастапқы бет
+    startPage: 0,
+
+    // Қабаттардың реті
+    startZIndex: 10,
+
+    // Беттің бұрышын бүгу
     showPageCorners: true,
+
+    // Қолмен сүйреу
     swipeDistance: 30
 });
 
-// HTML ішіндегі барлық беттерді кітапқа жүктеу
-const pages = document.querySelectorAll(".page");
+// HTML ішіндегі беттерді жүктеу
+pageFlip.loadFromHTML(
+    document.querySelectorAll(".page")
+);
 
-pageFlip.loadFromHTML(pages);
-
-// Батырмалар
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const pageInfo = document.getElementById("pageInfo");
-
-// Алға қарай парақтау
-nextBtn.addEventListener("click", () => {
-    pageFlip.flipNext();
+// Бет ауысқанда
+pageFlip.on("flip", (event) => {
+    console.log("Қазіргі бет:", event.data + 1);
 });
 
-// Артқа қарай парақтау
-prevBtn.addEventListener("click", () => {
-    pageFlip.flipPrev();
+// Кітаптың бағыты өзгергенде
+pageFlip.on("changeOrientation", (event) => {
+    console.log("Кітап бағыты:", event.data);
 });
 
-// Бет ауысқан сайын батырмалар мен нөмірді жаңарту
-function updateControls() {
-    const currentPage = pageFlip.getCurrentPageIndex();
-    const totalPages = pageFlip.getPageCount();
-
-    prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage >= totalPages - 1;
-
-    if (currentPage === 0) {
-        pageInfo.textContent = "Алдыңғы мұқаба";
-    } else if (currentPage === totalPages - 1) {
-        pageInfo.textContent = "Артқы мұқаба";
-    } else {
-        pageInfo.textContent =
-            `Бет ${currentPage} / ${totalPages - 2}`;
-    }
-}
-
-// Парақ аударылғанда ақпаратты жаңарту
-pageFlip.on("flip", () => {
-    updateControls();
+// Анимация күйі өзгергенде
+pageFlip.on("changeState", (event) => {
+    console.log("Анимация күйі:", event.data);
 });
-
-// Кітап жүктелгеннен кейін бастапқы күйді көрсету
-updateControls();
