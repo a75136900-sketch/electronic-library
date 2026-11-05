@@ -8,15 +8,16 @@ const sheets = Array.from(
 
 let isOpened = false;
 let currentPage = 0;
+let isAnimating = false;
 
-// Беттердің қабаттасу ретін орнату
+const animationDuration = 1500;
+
+// Беттердің қабаттасу ретін басқару
 function updateLayers() {
     sheets.forEach((sheet, index) => {
         if (index < currentPage) {
-            // Аударылған беттер сол жақта қалады
-            sheet.style.zIndex = index + 1;
+            sheet.style.zIndex = index + 2;
         } else {
-            // Аударылмаған беттер оң жақта тұрады
             sheet.style.zIndex = sheets.length - index + 10;
         }
     });
@@ -24,63 +25,91 @@ function updateLayers() {
 
 // Кітапты ашу
 function openBook() {
-    if (isOpened) return;
+    if (isOpened || isAnimating) return;
 
+    isAnimating = true;
     isOpened = true;
 
+    book.classList.add("opened");
     cover.classList.add("open");
 
-    updateLayers();
+    setTimeout(() => {
+        isAnimating = false;
+        updateLayers();
+    }, 1800);
 }
 
-// Келесі бетке өту
+// Келесі бет
 function nextPage() {
-    if (!isOpened) return;
+    if (!isOpened || isAnimating) return;
 
-    if (currentPage < sheets.length) {
-        sheets[currentPage].classList.add("flipped");
+    if (currentPage >= sheets.length) return;
 
-        currentPage++;
+    isAnimating = true;
 
-        updateLayers();
-    }
+    const sheet = sheets[currentPage];
+
+    sheet.classList.add("turning");
+    sheet.classList.add("flipped");
+
+    currentPage++;
+
+    updateLayers();
+
+    setTimeout(() => {
+        sheet.classList.remove("turning");
+        isAnimating = false;
+    }, animationDuration);
 }
 
-// Алдыңғы бетке қайту
+// Алдыңғы бет
 function previousPage() {
-    if (!isOpened) return;
+    if (!isOpened || isAnimating) return;
 
-    if (currentPage > 0) {
-        currentPage--;
+    if (currentPage <= 0) return;
 
-        sheets[currentPage].classList.remove("flipped");
+    isAnimating = true;
 
-        updateLayers();
-    }
+    currentPage--;
+
+    const sheet = sheets[currentPage];
+
+    sheet.classList.remove("flipped");
+    sheet.classList.add("turning");
+
+    updateLayers();
+
+    setTimeout(() => {
+        sheet.classList.remove("turning");
+        isAnimating = false;
+    }, animationDuration);
 }
 
-// Тышқанмен кітап беттерін басқару
+// Бетті басу арқылы басқару
 book.addEventListener("click", function(event) {
 
-    // Мұқабаны басу
+    // Алдыңғы мұқаба
     if (event.target.closest(".cover")) {
         openBook();
         return;
     }
 
-    if (!isOpened) return;
+    if (!isOpened || isAnimating) return;
 
-    // Оң жақ бетті басу — келесі бет
-    if (event.target.closest(".right-page")) {
+    const clickedSheet = event.target.closest(".sheet");
+
+    if (!clickedSheet) return;
+
+    // Оң жақ бет — келесі бет
+    if (!clickedSheet.classList.contains("flipped")) {
         nextPage();
-        return;
     }
 
-    // Сол жақ бетті басу — алдыңғы бет
-    if (event.target.closest(".left-page")) {
+    // Сол жақ бет — алдыңғы бет
+    else {
         previousPage();
     }
 });
 
-// Бастапқы беттердің орналасуы
+// Бастапқы қабаттар
 updateLayers();
