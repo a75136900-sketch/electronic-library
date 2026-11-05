@@ -1,64 +1,86 @@
 
+const book = document.getElementById("book");
 const cover = document.getElementById("cover");
 
-const papers = [
-    document.getElementById("paper1"),
-    document.getElementById("paper2"),
-    document.getElementById("paper3")
-];
+const sheets = Array.from(
+    document.querySelectorAll(".sheet")
+);
 
-let currentPage = 0;
 let isOpened = false;
+let currentPage = 0;
 
+// Беттердің қабаттасу ретін орнату
+function updateLayers() {
+    sheets.forEach((sheet, index) => {
+        if (index < currentPage) {
+            // Аударылған беттер сол жақта қалады
+            sheet.style.zIndex = index + 1;
+        } else {
+            // Аударылмаған беттер оң жақта тұрады
+            sheet.style.zIndex = sheets.length - index + 10;
+        }
+    });
+}
+
+// Кітапты ашу
 function openBook() {
     if (isOpened) return;
 
-    cover.classList.add("open");
     isOpened = true;
 
-    document.getElementById("pageNumber").textContent = "1–2 бет";
+    cover.classList.add("open");
+
+    updateLayers();
 }
 
+// Келесі бетке өту
 function nextPage() {
-    if (!isOpened) {
+    if (!isOpened) return;
+
+    if (currentPage < sheets.length) {
+        sheets[currentPage].classList.add("flipped");
+
+        currentPage++;
+
+        updateLayers();
+    }
+}
+
+// Алдыңғы бетке қайту
+function previousPage() {
+    if (!isOpened) return;
+
+    if (currentPage > 0) {
+        currentPage--;
+
+        sheets[currentPage].classList.remove("flipped");
+
+        updateLayers();
+    }
+}
+
+// Тышқанмен кітап беттерін басқару
+book.addEventListener("click", function(event) {
+
+    // Мұқабаны басу
+    if (event.target.closest(".cover")) {
         openBook();
         return;
     }
 
-    if (currentPage < papers.length) {
-        papers[currentPage].classList.add("flipped");
-        currentPage++;
-        updatePageNumber();
+    if (!isOpened) return;
+
+    // Оң жақ бетті басу — келесі бет
+    if (event.target.closest(".right-page")) {
+        nextPage();
+        return;
     }
-}
 
-function previousPage() {
-    if (currentPage > 0) {
-        currentPage--;
-        papers[currentPage].classList.remove("flipped");
-        updatePageNumber();
+    // Сол жақ бетті басу — алдыңғы бет
+    if (event.target.closest(".left-page")) {
+        previousPage();
     }
-}
+});
 
-function updatePageNumber() {
-    if (currentPage === 0) {
-        document.getElementById("pageNumber").textContent = "1–2 бет";
-    } else {
-        document.getElementById("pageNumber").textContent =
-            (currentPage * 2 + 1) + "–" +
-            (currentPage * 2 + 2) + " бет";
-    }
-}
-
-function closeBook() {
-    papers.forEach(paper => {
-        paper.classList.remove("flipped");
-    });
-
-    currentPage = 0;
-    isOpened = false;
-
-    cover.classList.remove("open");
-
-    document.getElementById("pageNumber").textContent = "Мұқаба";
-}
+// Бастапқы беттердің орналасуы
+updateLayers();
