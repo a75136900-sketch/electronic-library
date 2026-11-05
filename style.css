@@ -6,79 +6,61 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f3eee5;
-    color: #302c28;
-}
-
-header {
-    background: #243b35;
-    color: white;
-    text-align: center;
-    padding: 30px;
-}
-
-.reader-section {
-    text-align: center;
-    padding: 50px 15px;
-    background: #e8dfcf;
-}
-
-.reader-section > h2 {
-    color: #244638;
-    margin-bottom: 12px;
-}
-
-.book-stage {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at center, #756b5c, #292722);
     display: flex;
     justify-content: center;
-    padding: 45px 0;
-    perspective: 1800px;
-}
-
-.flipbook {
-    position: relative;
-    width: min(700px, 90vw);
-    height: 380px;
-    background: #fffaf0;
-    box-shadow: 0 15px 35px #0004;
-}
-
-.cover {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    background: linear-gradient(135deg, #315d49, #142f25);
-    color: white;
-    display: flex;
     align-items: center;
+    overflow: hidden;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Кітап орналасатын орта */
+
+.scene {
+    width: 100%;
+    height: 100vh;
+    display: flex;
     justify-content: center;
-    transform-origin: left center;
-    transition: transform 1.3s ease;
-    cursor: pointer;
-    border: 5px solid #a77b42;
-    backface-visibility: hidden;
+    align-items: center;
+    perspective: 2200px;
+    padding: 15px;
 }
 
-.cover.open {
-    transform: rotateY(-180deg);
-    pointer-events: none;
+/* Кітаптың жалпы өлшемі */
+
+.book {
+    position: relative;
+    width: min(900px, 96vw);
+    height: min(580px, 82vh);
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 25px 25px #0008);
 }
 
-.cover-content {
-    text-align: center;
-    padding: 20px;
+/* Қағаздың жалпы түсі */
+
+.left-base {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: #f6eedb;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            #d6c8a8 4px
+        );
+    border-radius: 5px 0 0 5px;
+    box-shadow: inset -12px 0 20px #78674b22;
 }
 
-.cover-content span {
-    font-size: 65px;
-}
+/* Беттер */
 
-.cover-content h2 {
-    margin: 20px 0;
-}
-
-.paper {
+.sheet {
     position: absolute;
     top: 0;
     left: 50%;
@@ -86,80 +68,253 @@ header {
     height: 100%;
     transform-origin: left center;
     transform-style: preserve-3d;
-    transition: transform 1s ease;
-    background: white;
+    transition: transform 1s cubic-bezier(.645,.045,.355,1);
 }
 
-.paper.flipped {
-    transform: rotateY(-180deg);
-}
-
-.front, .back {
+.page {
     position: absolute;
-    inset: 0;
-    padding: 30px 22px;
-    background: #fffdf5;
+    width: 100%;
+    height: 100%;
+    padding: 55px 38px;
+    background-color: #f8f0df;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            #e7ddc9 4px
+        );
     backface-visibility: hidden;
-    border: 1px solid #ddd1b9;
-    overflow: auto;
-    line-height: 1.7;
+    overflow: hidden;
+    color: #40382d;
+    line-height: 1.85;
+    text-align: justify;
+    font-size: 16px;
 }
 
-.front h2, .back h2 {
-    color: #31594a;
-    margin: 35px 0 15px;
+.front {
+    border-left: 1px solid #c8b99b;
+    box-shadow: inset 8px 0 15px #0000000c;
 }
 
 .back {
     transform: rotateY(180deg);
+    border-right: 1px solid #c8b99b;
+    box-shadow: inset -8px 0 15px #0000000c;
 }
 
-.book-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.book-controls span {
-    font-weight: bold;
-}
-
-button {
-    background: #31594a;
-    color: white;
-    border: none;
-    padding: 13px 22px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #1b382d;
-    transform: scale(1.05);
-}
-
-.close-book {
-    background: #9b4444;
-}
-
-footer {
-    background: #243b35;
-    color: white;
+.page h1 {
     text-align: center;
-    padding: 25px;
+    font-size: 30px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    color: #62472c;
 }
 
-@media(max-width: 600px) {
-    .flipbook {
-        height: 300px;
+.page h2 {
+    font-size: 23px;
+    color: #67482b;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page h3 {
+    font-size: 18px;
+    text-align: center;
+    color: #98774c;
+    margin-bottom: 25px;
+}
+
+.page p {
+    margin-bottom: 16px;
+    text-indent: 22px;
+}
+
+.page ul {
+    padding-left: 22px;
+    margin: 15px 0;
+}
+
+.page li {
+    margin-bottom: 9px;
+}
+
+.intro {
+    font-size: 18px;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #9b896d;
+}
+
+.line {
+    width: 65px;
+    height: 2px;
+    background: #a8895d;
+    margin: 0 auto 30px;
+}
+
+.end-text {
+    text-align: center;
+    font-style: italic;
+    margin-top: 45px;
+    color: #92744d;
+}
+
+/* Беттердің орналасу реті */
+
+.sheet:nth-of-type(2) { z-index: 16; }
+.sheet:nth-of-type(3) { z-index: 15; }
+.sheet:nth-of-type(4) { z-index: 14; }
+.sheet:nth-of-type(5) { z-index: 13; }
+.sheet:nth-of-type(6) { z-index: 12; }
+.sheet:nth-of-type(7) { z-index: 11; }
+
+/* Бетті аудару */
+
+.sheet.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Кітап мұқабасы */
+
+.cover {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 100%;
+    z-index: 30;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition:
+        transform 1.5s cubic-bezier(.645,.045,.355,1),
+        left 1.5s cubic-bezier(.645,.045,.355,1);
+    cursor: pointer;
+    background: linear-gradient(
+        110deg,
+        #372318,
+        #70472a 35%,
+        #3c271a 70%,
+        #24170f
+    );
+    border: 5px solid #9a7144;
+    box-shadow:
+        inset 8px 0 15px #ffffff18,
+        inset -8px 0 15px #0007;
+    backface-visibility: hidden;
+}
+
+.cover.open {
+    left: 50%;
+    transform: rotateY(-180deg);
+    pointer-events: none;
+}
+
+.cover-design {
+    position: absolute;
+    inset: 12px;
+    border: 2px solid #c4a36d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(ellipse, #79502f, #40291a);
+}
+
+.cover-border {
+    position: absolute;
+    inset: 15px;
+    border: 1px solid #d0ad77;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #e8d2a7;
+    padding: 15px;
+}
+
+.cover-symbol {
+    font-size: 65px;
+    color: #d8b77e;
+    margin-bottom: 30px;
+}
+
+.cover-border h1 {
+    font-size: clamp(20px, 3vw, 32px);
+    letter-spacing: 5px;
+    margin-bottom: 22px;
+    text-shadow: 2px 3px 5px #000;
+}
+
+.cover-line {
+    width: 65%;
+    height: 1px;
+    background: #c8a36c;
+    margin-bottom: 25px;
+}
+
+.cover-border h2 {
+    font-size: clamp(14px, 2vw, 20px);
+    letter-spacing: 3px;
+    line-height: 1.8;
+    font-weight: normal;
+}
+
+.bottom-symbol {
+    margin: 30px 0 0;
+    transform: rotate(180deg);
+}
+
+/* Тышқанды апарғанда */
+
+.cover:hover {
+    filter: brightness(1.15);
+}
+
+/* Телефонға бейімдеу */
+
+@media (max-width: 650px) {
+    .book {
+        height: min(460px, 75vh);
     }
 
-    .front, .back {
-        padding: 15px 10px;
+    .page {
+        padding: 30px 13px;
         font-size: 12px;
+        line-height: 1.65;
+    }
+
+    .page h1 {
+        font-size: 19px;
+        margin-top: 30px;
+    }
+
+    .page h2 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .page h3 {
+        font-size: 14px;
+    }
+
+    .page p {
+        margin-bottom: 10px;
+        text-indent: 10px;
+    }
+
+    .cover-border h1 {
+        letter-spacing: 2px;
+    }
+
+    .cover-symbol {
+        font-size: 40px;
     }
 }
