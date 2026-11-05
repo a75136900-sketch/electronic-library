@@ -1,112 +1,77 @@
 
-const book = document.getElementById("book");
-const cover = document.getElementById("cover");
+const bookElement = document.getElementById("book");
 
-const sheets = Array.from(
-    document.querySelectorAll(".sheet")
-);
+const pageFlip = new St.PageFlip(bookElement, {
+    width: 450,
+    height: 600,
 
-let isOpened = false;
-let currentPage = 0;
-let isAnimating = false;
+    size: "stretch",
+    minWidth: 280,
+    maxWidth: 900,
+    minHeight: 350,
+    maxHeight: 1200,
 
-const animationDuration = 1500;
+    drawShadow: true,
+    maxShadowOpacity: 0.8,
 
-// Қабаттарды реттеу
-function updateLayers() {
-    sheets.forEach((sheet, index) => {
-        if (index < currentPage) {
-            sheet.style.zIndex = index + 2;
-        } else {
-            sheet.style.zIndex = sheets.length - index + 10;
-        }
-    });
-}
+    flippingTime: 1200,
 
-// Кітапты ашу
-function openBook() {
-    if (isOpened || isAnimating) return;
+    usePortrait: true,
+    startPage: 0,
+    startZIndex: 10,
 
-    isAnimating = true;
-    isOpened = true;
+    autoSize: true,
+    showCover: true,
 
-    book.classList.add("opened");
-    cover.classList.add("open");
+    mobileScrollSupport: false,
+    disableFlipByClick: false,
 
-    setTimeout(() => {
-        isAnimating = false;
-        updateLayers();
-    }, 1800);
-}
-
-// Келесі бет
-function nextPage() {
-    if (!isOpened || isAnimating) return;
-    if (currentPage >= sheets.length) return;
-
-    isAnimating = true;
-
-    const sheet = sheets[currentPage];
-
-    sheet.classList.add("turning");
-    sheet.classList.add("flipped");
-
-    currentPage++;
-
-    updateLayers();
-
-    setTimeout(() => {
-        sheet.classList.remove("turning");
-        isAnimating = false;
-    }, animationDuration);
-}
-
-// Алдыңғы бет
-function previousPage() {
-    if (!isOpened || isAnimating) return;
-    if (currentPage <= 0) return;
-
-    isAnimating = true;
-
-    currentPage--;
-
-    const sheet = sheets[currentPage];
-
-    sheet.classList.remove("flipped");
-    sheet.classList.add("turning-back");
-
-    updateLayers();
-
-    setTimeout(() => {
-        sheet.classList.remove("turning-back");
-        isAnimating = false;
-    }, animationDuration);
-}
-
-// Басу арқылы басқару
-book.addEventListener("click", function(event) {
-
-    // Мұқабаны ашу
-    if (event.target.closest(".cover")) {
-        openBook();
-        return;
-    }
-
-    if (!isOpened || isAnimating) return;
-
-    const clickedSheet = event.target.closest(".sheet");
-
-    if (!clickedSheet) return;
-
-    // Оң жақ бет
-    if (!clickedSheet.classList.contains("flipped")) {
-        nextPage();
-    }
-
-    // Сол жақ бет
-    else {
-        previousPage();
-    }
+    showPageCorners: true,
+    swipeDistance: 30
 });
 
-updateLayers();
+// HTML ішіндегі барлық беттерді кітапқа жүктеу
+const pages = document.querySelectorAll(".page");
+
+pageFlip.loadFromHTML(pages);
+
+// Батырмалар
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const pageInfo = document.getElementById("pageInfo");
+
+// Алға қарай парақтау
+nextBtn.addEventListener("click", () => {
+    pageFlip.flipNext();
+});
+
+// Артқа қарай парақтау
+prevBtn.addEventListener("click", () => {
+    pageFlip.flipPrev();
+});
+
+// Бет ауысқан сайын батырмалар мен нөмірді жаңарту
+function updateControls() {
+    const currentPage = pageFlip.getCurrentPageIndex();
+    const totalPages = pageFlip.getPageCount();
+
+    prevBtn.disabled = currentPage === 0;
+    nextBtn.disabled = currentPage >= totalPages - 1;
+
+    if (currentPage === 0) {
+        pageInfo.textContent = "Алдыңғы мұқаба";
+    } else if (currentPage === totalPages - 1) {
+        pageInfo.textContent = "Артқы мұқаба";
+    } else {
+        pageInfo.textContent =
+            `Бет ${currentPage} / ${totalPages - 2}`;
+    }
+}
+
+// Парақ аударылғанда ақпаратты жаңарту
+pageFlip.on("flip", () => {
+    updateControls();
+});
+
+// Кітап жүктелгеннен кейін бастапқы күйді көрсету
+updateControls();
