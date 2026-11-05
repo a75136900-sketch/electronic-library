@@ -1,5 +1,4 @@
 
-
 * {
     margin: 0;
     padding: 0;
@@ -8,46 +7,54 @@
 
 body {
     min-height: 100vh;
-    background:
-        radial-gradient(ellipse at center, #776653, #29231d 75%, #100e0c);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    background: radial-gradient(ellipse at center, #776653, #29231d 75%, #100e0c);
     font-family: Georgia, "Times New Roman", serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 18px 10px 25px;
 }
 
+.main-title {
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+
+/* Кітаптың орналасуы */
 .scene {
     width: 100%;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 2000px;
-    padding: 20px;
 }
 
-/* Кітаптың сыртқы өлшемі */
+.book-wrapper {
+    width: min(900px, 94vw, calc((100vh - 150px) * 1.5));
+    aspect-ratio: 3 / 2;
+    position: relative;
+    margin: 0 auto;
+}
 
 #book {
-    width: min(1000px, 96vw);
-    height: min(650px, 85vh);
-    margin: auto;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
 }
 
-/* Әрбір парақ */
-
+/* Кітап беттері */
 .page {
-    background: #f7eedc;
+    background: #f8f0df;
     color: #40382d;
     overflow: hidden;
     border: 1px solid #d4c4a5;
-    box-shadow:
-        inset 0 0 20px #927b5420;
+    box-shadow: inset 0 0 20px #927b5420;
 }
 
 /* Қағаз текстурасы */
-
 .page:not(.cover-page):not(.back-cover) {
     background-color: #f8f0df;
     background-image:
@@ -67,27 +74,27 @@ body {
 }
 
 /* Бет ішіндегі мәтін */
-
 .page-content {
     position: relative;
+    width: 100%;
     height: 100%;
-    padding: 55px 42px;
-    line-height: 1.9;
+    padding: 45px 38px;
+    line-height: 1.8;
     text-align: justify;
 }
 
 .page-content h1 {
-    font-size: 30px;
+    font-size: 28px;
     text-align: center;
     color: #62472c;
-    margin: 60px 0 25px;
+    margin: 55px 0 25px;
 }
 
 .page-content h2 {
     text-align: center;
-    font-size: 25px;
+    font-size: 23px;
     color: #67482b;
-    margin: 35px 0 25px;
+    margin: 30px 0 25px;
 }
 
 .page-content h3 {
@@ -99,8 +106,8 @@ body {
 
 .page-content p {
     font-size: 17px;
-    margin-bottom: 20px;
-    text-indent: 25px;
+    margin-bottom: 18px;
+    text-indent: 22px;
 }
 
 .page-content ul {
@@ -109,13 +116,13 @@ body {
 }
 
 .page-content li {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     font-size: 17px;
 }
 
 .number {
     position: absolute;
-    bottom: 22px;
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 13px;
@@ -126,165 +133,175 @@ body {
     width: 70px;
     height: 2px;
     background: #a8895d;
-    margin: 0 auto 35px;
+    margin: 0 auto 30px;
 }
 
-/* Алдыңғы мұқаба */
-
-.cover-page {
-    background:
-        linear-gradient(
-            120deg,
-            #24170f,
-            #70472a 35%,
-            #3c271a 70%,
-            #24170f
-        );
+/* Алдыңғы және артқы мұқабалар */
+.cover-page,
+.back-cover {
+    background: linear-gradient(120deg, #24170f, #70472a 45%, #3c271a 75%, #24170f);
     border: 8px solid #9a7144;
     color: #e8d2a7;
-    padding: 15px;
+    padding: 12px;
 }
 
 .cover-frame {
+    width: 100%;
     height: 100%;
     border: 2px solid #c4a36d;
     outline: 1px solid #c4a36d;
-    outline-offset: -10px;
+    outline-offset: -9px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 25px;
-    background:
-        radial-gradient(ellipse, #79502f, #40291a);
+    padding: 20px;
+    background: radial-gradient(ellipse, #79502f, #40291a);
 }
 
 .cover-frame h1 {
     font-size: clamp(22px, 3vw, 36px);
-    letter-spacing: 5px;
-    line-height: 1.7;
-    margin: 25px 0;
+    letter-spacing: 4px;
+    line-height: 1.6;
+    margin: 20px 0;
     text-shadow: 2px 3px 5px #000;
 }
 
 .cover-frame h2 {
-    font-size: clamp(16px, 2vw, 23px);
-    letter-spacing: 3px;
-    line-height: 1.8;
+    font-size: clamp(15px, 2vw, 22px);
+    letter-spacing: 2px;
+    line-height: 1.7;
     font-weight: normal;
-}
-
-.cover-decoration {
-    font-size: 65px;
-    color: #d8b77e;
-}
-
-.bottom {
-    margin-top: 30px;
 }
 
 .cover-frame p {
     font-size: 12px;
     color: #c9ae82;
-    margin-top: 35px;
+    margin-top: 28px;
+}
+
+.ornament {
+    font-size: 48px;
+    color: #d8b77e;
 }
 
 .gold-line {
-    width: 70%;
+    width: 65%;
     height: 2px;
     background: #c8a36c;
-    margin: 15px auto 30px;
+    margin: 15px auto 25px;
 }
 
 /* Артқы мұқаба */
-
-.back-cover {
-    background:
-        linear-gradient(
-            120deg,
-            #24170f,
-            #70472a,
-            #372318
-        );
-    border: 8px solid #9a7144;
-    padding: 15px;
-    color: #e8d2a7;
+.back-cover .cover-frame {
+    gap: 15px;
 }
 
-.back-frame {
-    height: 100%;
-    border: 2px solid #c4a36d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 30px;
-    background: radial-gradient(ellipse, #79502f, #40291a);
+.back-cover .cover-frame h1 {
+    font-size: 34px;
 }
 
-.back-frame h1 {
-    font-size: 32px;
-    letter-spacing: 5px;
-}
-
-.back-frame p {
-    font-style: italic;
-}
-
-/* Кітаптың қалыңдығы */
-
+/* Кітаптың көлеңкесі */
 .stf__block {
-    filter: drop-shadow(0 25px 30px #0008);
+    filter: drop-shadow(0 20px 25px #0009);
 }
 
-/* Телефонға бейімдеу */
+/* Батырмалар */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 20px;
+}
 
+.controls button {
+    padding: 11px 22px;
+    border: 1px solid #d9b878;
+    border-radius: 7px;
+    background: #382719;
+    color: #f7e5b8;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.controls button:hover:not(:disabled) {
+    background: #79502e;
+}
+
+.controls button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    min-width: 130px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* Кіші экрандар */
 @media (max-width: 650px) {
-    #book {
-        height: min(520px, 78vh);
+    body {
+        padding-top: 12px;
+    }
+
+    .main-title {
+        font-size: 20px;
+    }
+
+    .book-wrapper {
+        width: min(94vw, calc((100vh - 130px) * 1.5));
     }
 
     .page-content {
-        padding: 30px 15px;
-        line-height: 1.65;
+        padding: 25px 17px;
+        line-height: 1.55;
     }
 
     .page-content h1 {
-        font-size: 20px;
-        margin-top: 30px;
+        font-size: 19px;
+        margin-top: 25px;
     }
 
     .page-content h2 {
-        font-size: 17px;
-        margin-top: 20px;
+        font-size: 16px;
+        margin-top: 18px;
     }
 
     .page-content h3 {
-        font-size: 15px;
+        font-size: 14px;
     }
 
-    .page-content p {
-        font-size: 12px;
-        margin-bottom: 12px;
-        text-indent: 10px;
-    }
-
+    .page-content p,
     .page-content li {
         font-size: 12px;
         margin-bottom: 10px;
-    }
-
-    .cover-decoration {
-        font-size: 40px;
     }
 
     .cover-frame h1 {
         letter-spacing: 2px;
     }
 
-    .back-frame h1 {
-        font-size: 20px;
+    .ornament {
+        font-size: 30px;
+    }
+
+    .controls {
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .controls button {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    #pageInfo {
+        min-width: 100px;
+        font-size: 12px;
     }
 }
