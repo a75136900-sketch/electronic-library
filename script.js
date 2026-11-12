@@ -1,9 +1,7 @@
-
 const bookElement = document.getElementById("book");
 
 if (typeof St === "undefined") {
-    document.getElementById("pageInfo").textContent =
-        "Кітапхананы жүктеу қатесі. Интернетті тексеріңіз.";
+    console.error("PageFlip кітапханасын жүктеу қатесі. Интернетті тексеріңіз.");
 } else {
     const pageFlip = new St.PageFlip(bookElement, {
         width: 450,
@@ -23,7 +21,6 @@ if (typeof St === "undefined") {
         drawShadow: true,
         maxShadowOpacity: 0.7,
 
-        // Екі бетті қатар көрсету
         usePortrait: false,
 
         autoSize: true,
@@ -39,39 +36,4 @@ if (typeof St === "undefined") {
     const pages = document.querySelectorAll(".page");
 
     pageFlip.loadFromHTML(pages);
-
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const pageInfo = document.getElementById("pageInfo");
-
-    function updateControls() {
-        const currentPage = pageFlip.getCurrentPageIndex();
-        const totalPages = pageFlip.getPageCount();
-
-        prevBtn.disabled = currentPage <= 0;
-        nextBtn.disabled = currentPage >= totalPages - 1;
-
-        if (currentPage === 0) {
-            pageInfo.textContent = "Алдыңғы мұқаба";
-        } else if (currentPage === totalPages - 1) {
-            pageInfo.textContent = "Артқы мұқаба";
-        } else {
-            pageInfo.textContent =
-                "Беттер " + currentPage + "–" + (currentPage + 1);
-        }
-    }
-
-    nextBtn.addEventListener("click", () => {
-        pageFlip.flipNext();
-    });
-
-    prevBtn.addEventListener("click", () => {
-        pageFlip.flipPrev();
-    });
-
-    pageFlip.on("flip", () => {
-        updateControls();
-    });
-
-    updateControls();
 }
