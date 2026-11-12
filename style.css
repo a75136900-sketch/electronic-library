@@ -77,62 +77,74 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 45px 38px;
-    line-height: 1.8;
-    text-align: justify;
+    padding: 30px 27px;
+    line-height: 1.5;
+    text-align: left;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #b49a73 transparent;
 }
 
+/* Тақырыптар */
 .page-content h1 {
-    font-size: 28px;
+    font-size: 23px;
     text-align: center;
     color: #62472c;
-    margin: 55px 0 25px;
+    margin: 20px 0 15px;
 }
 
 .page-content h2 {
     text-align: center;
-    font-size: 23px;
+    font-size: 19px;
     color: #67482b;
-    margin: 30px 0 25px;
+    margin: 15px 0 15px;
 }
 
 .page-content h3 {
     text-align: center;
-    font-size: 19px;
+    font-size: 16px;
     color: #98774c;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
+/* Негізгі мәтін */
 .page-content p {
-    font-size: 17px;
-    margin-bottom: 18px;
-    text-indent: 22px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-indent: 15px;
+    line-height: 1.5;
 }
 
+/* Тізімдер */
 .page-content ul {
-    padding-left: 25px;
-    margin-top: 25px;
+    padding-left: 20px;
+    margin-top: 15px;
 }
 
 .page-content li {
-    margin-bottom: 16px;
-    font-size: 17px;
+    margin-bottom: 9px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
+/* Бет нөмірі */
 .number {
-    position: absolute;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
+    position: sticky;
+    display: block;
+    bottom: 0;
+    text-align: center;
+    font-size: 12px;
     color: #9b896d;
+    margin-top: 15px;
 }
 
+/* Бөлім сызығы */
 .line {
     width: 70px;
     height: 2px;
     background: #a8895d;
-    margin: 0 auto 30px;
+    margin: 0 auto 20px;
 }
 
 /* Алдыңғы және артқы мұқабалар */
@@ -206,44 +218,9 @@ body {
     filter: drop-shadow(0 20px 25px #0009);
 }
 
-/* Батырмалар */
-.controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin-top: 20px;
-}
-
-.controls button {
-    padding: 11px 22px;
-    border: 1px solid #d9b878;
-    border-radius: 7px;
-    background: #382719;
-    color: #f7e5b8;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.controls button:hover:not(:disabled) {
-    background: #79502e;
-}
-
-.controls button:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-}
-
-#pageInfo {
-    min-width: 130px;
-    text-align: center;
-    font-size: 14px;
-    color: #fff;
-}
-
 /* Кіші экрандар */
 @media (max-width: 650px) {
+
     body {
         padding-top: 12px;
     }
@@ -257,28 +234,29 @@ body {
     }
 
     .page-content {
-        padding: 25px 17px;
-        line-height: 1.55;
+        padding: 20px 15px;
+        line-height: 1.4;
     }
 
     .page-content h1 {
-        font-size: 19px;
-        margin-top: 25px;
+        font-size: 17px;
+        margin: 15px 0 12px;
     }
 
     .page-content h2 {
-        font-size: 16px;
-        margin-top: 18px;
+        font-size: 15px;
+        margin: 12px 0;
     }
 
     .page-content h3 {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .page-content p,
     .page-content li {
-        font-size: 12px;
-        margin-bottom: 10px;
+        font-size: 11px;
+        margin-bottom: 8px;
+        line-height: 1.4;
     }
 
     .cover-frame h1 {
@@ -287,20 +265,5 @@ body {
 
     .ornament {
         font-size: 30px;
-    }
-
-    .controls {
-        gap: 8px;
-        margin-top: 15px;
-    }
-
-    .controls button {
-        padding: 9px 12px;
-        font-size: 13px;
-    }
-
-    #pageInfo {
-        min-width: 100px;
-        font-size: 12px;
     }
 }
